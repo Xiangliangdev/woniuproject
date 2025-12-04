@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式物联网监控系统</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 消息提示区域 -->
+        <div id="message-container"></div>
+        
+        <h1>嵌入式物联网监控系统</h1>
+        
+        <!-- 视频显示区域（放大） -->
+        <div class="video-area">
+            <h2>实时视频监控</h2>
+           <div class="video-container">
+                
+                <div class="video-overlay">
+                    <span class="video-status" id="video-status">● 实时</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 控制面板区域 -->
+            <div class="control-panel">
+                <h2>设备控制</h2>
+                
+                <!-- LED控制 -->
+                <div class="control-group">
+                    <h3>💡 LED控制</h3>
+                    <div class="button-group">
+                        <button class="control-btn led-on" data-cmd_control" data-value="1">开灯</button>
+                        <button class="control-btn led-off" data-cmd="led_control" data-value="0">关灯</button>
+                    </div>
+                    <div class="slider-container">
+                        <label>LED亮度调节:</label>
+                        <input type="range" id="led-brightness" min="0" max="100" value="0" class="brightness-slider">
+                        <span id="brightness-value">0>
+                    </div>
+                </div>
+                
+                <!-- 风扇控制 -->
+                <div class="control-group">
+                    <h3>🌀 风扇控制</h3>
+                    <div class="button-group">
+                        <button class="control-btn fan-on" data-cmd="fan_control" data-value="1">开启风扇</button>
+                        <button class="control-btn fan-off" data-cmd="fan_control" data-value="0">关闭风扇</button>
+                    </div>
+                    <div class="slider-container">
+                        <label>风扇:</label>
+                        <input type="range" id="fan-speed" min="0" max="100" value="0" class="speed-slider">
+                        <span id="speed-value">0%</span>
+                    </div>
+                </div>
+                
+                <!-- 蜂鸣器控制 -->
+                <div class="control-group">
+                    <h3>🔊 蜂鸣器控制</h3>
+                    <div class="button-group">
+                        <button class="control-btn buzzer-on" data-cmd="buzzer_control" data-value="1">开启蜂鸣器                        <button class="control-btn buzzer-off" data-cmd="buzzer_control" data-value="0">关闭蜂鸣器</button>
+                        <button class="control-btn buzzer-beep" id="buzzer-beep">蜂鸣器鸣叫</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 状态显示区域 -->
+            <div class="status-area">
+                <h2>📊 设备状态</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        class="label">🌡️ 温度:</span>
+                        <span id="temp" class="value">-</span>
+                        <span class="unit">°C</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">💧 湿度:</span>
+                        <span id="humi" class="value">-</span>
+                        <span class="unit">%</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">☀️ 光照强度:</span>
+                        <span id="light" class="value">-</span>
+                        <span class="unit">lux</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">🚨 烟雾检测:</span>
+                        <span id="smoke" class="value">-</span>
+                        <span class="alert" id="smoke-alert"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">💡 LED状态:</span>
+                        <span id="led-status" class="value">关闭</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">🌀 风扇状态:</span>
+                        <span id="fan-status" class="value">关闭</span>
+                        <span id="fan-speed-display" class="sub-value"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">🔊 蜂鸣器状态:</span>
+                        <span id="buzzer-status" class="value">关闭</span>
+                    </div>
+                    <div class="status-item full-width system-status">
+                        <span class="label">🖥️ 系统状态:</span>
+                        <span id="sys-status" class="value">未连接</span>
+                        <span id="last-update" class="timestamp"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 系统功能区域 -->
+        <div class="system-functions">
+            <h2>⚙️ 系统功能</h2>
+            <div class="function-buttons">
+                <button class="func-btn" id="snapshot-btn">📷 拍照</button>
+                <button class="func-btn" id="record-start-btn">⏺️ 开始录像</button>
+                <button class="func-btn" id="record-stop-btn" disabled> 停止录像</button>
+                <button class="func-btn" id="refresh-btn">🔄 刷新状态</button>
+            </div>
+            <div class="recording-status" id="recording-status" style="display: none;">
+                <span class="recording-indicator">●</span>
+                <span>正在录制中... 时长: <span id="record-time">00:00</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cgi_api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
